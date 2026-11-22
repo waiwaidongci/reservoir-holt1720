@@ -11,14 +11,22 @@ export function plot(chart) {
   const series = chart.series;
   if (!series.length) return el('section', {class:'plot'}, h(3, chart.title), p('无可绘制数据', 'empty'));
   const values = series.map(item => item.value);
-  const bound = Math.max(0, ...values);
-  const bottom = Math.min(0, ...values);
+  const limit = chart.threshold ?? null;
+  const bound = Math.max(0, ...values, ...(limit === null ? [] : [limit]));
+  const bottom = Math.min(0, ...values, ...(limit === null ? [] : [limit]));
   const span = bound - bottom || 1;
   const x = i => 28 + (i + .5) * 724 / values.length;
   const y = n => 16 + (bound - n) * 135 / span;
   const baseline = y(0);
   const svg = shape('svg', {viewBox:'0 0 780 167', role:'img', 'aria-label':chart.title});
   svg.append(shape('line', {x1:25,x2:755,y1:baseline,y2:baseline,class:'axis'}));
+  if (limit !== null) {
+    const edge = shape('line', {x1:25, x2:755, y1:y(limit), y2:y(limit), class:'limit'});
+    const note = shape('title', {});
+    note.textContent = `警戒线 ${value(limit)}`;
+    edge.append(note);
+    svg.append(edge);
+  }
   if (chart.kind === 'line') {
     svg.append(shape('polyline', {points: values.map((val,i) => `${x(i)},${y(val)}`).join(' '), class:'trend'}));
   }

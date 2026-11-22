@@ -27,3 +27,32 @@ def schedule(item):
 def delivery(item):
     return {'id': item.id, 'run_id': item.run_id, 'recipient': item.recipient,
             'state': item.state, 'detail': item.detail, 'created_at': iso(item.created_at)}
+
+
+def pool(item, active_events):
+    return {'pool': item.pool, 'threshold_m': item.threshold_m, 'epoch': item.epoch,
+            'active_events': active_events, 'updated_at': iso(item.updated_at)}
+
+
+def event(item):
+    return {'id': item.id, 'pool': item.pool, 'start_at': iso(item.start_at), 'end_at': iso(item.end_at),
+            'minutes': item.minutes, 'peak_level': item.peak_level, 'peak_at': iso(item.peak_at),
+            'threshold_m': item.threshold_m, 'state': item.state, 'epoch': item.epoch,
+            'created_at': iso(item.created_at), 'superseded_at': iso(item.superseded_at)}
+
+
+def reading(item, batch_name):
+    return {'minute': iso(item.minute), 'level_m': item.level_m, 'revision': item.revision,
+            'superseded': item.superseded, 'batch_id': item.batch_id, 'batch_name': batch_name}
+
+
+def probe_batch(item):
+    return {'id': item.id, 'name': item.name, 'filename': item.filename, 'row_count': item.row_count,
+            'inserted': item.inserted, 'kept': item.kept, 'skipped': item.skipped,
+            'checksum': item.checksum, 'author': item.author, 'created_at': iso(item.created_at)}
+
+
+def recalc(item):
+    return {'id': item.id, 'pool': item.pool, 'epoch': item.epoch, 'threshold_m': item.threshold_m,
+            'windows': item.windows, 'status': item.status, 'attempt': item.attempt,
+            'error': item.error, 'created_at': iso(item.created_at), 'finished_at': iso(item.finished_at)}

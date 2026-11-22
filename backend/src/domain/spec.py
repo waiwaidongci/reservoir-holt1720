@@ -38,7 +38,18 @@ SPEC = {
     "decision": "高位巡检复核",
     "action": "登记巡检决定",
     "modes": ["加密巡检", "补测后重跑", "按班次巡检"],
-    "pages": ["雨水回用值班总览", "晨检液位台账", "池位预测设置", "水位预报与评估", "高位巡检复核", "机电交班报告"],
+    "pages": ["雨水回用值班总览", "晨检液位台账", "池位预测设置", "水位预报与评估", "高位巡检复核", "机电交班报告", "高位事件交班"],
+    "probe": {
+        "sample_name": "澄湾_RW-02_分钟回传_样例.csv",
+        "default_threshold_m": 2.05,
+        "min_minutes": 10,
+        "fields": [
+            {"key": "reservoir_id", "label": "水池编号", "type": "string", "required": True, "max_length": 40},
+            {"key": "reading_at", "label": "读数分钟", "type": "string", "required": True, "help": "ISO 格式，如 2026-11-14 00:07；不带时区按北京时间。"},
+            {"key": "level_m", "label": "液位（m）", "type": "number", "required": True, "min": 0, "max": 20},
+            {"key": "revision", "label": "修订号", "type": "int", "required": False, "min": 0, "max": 999999, "help": "留空按 0 计；更正时传更大的修订号。"},
+        ],
+    },
     "fields": [
         {"key": "reservoir_id", "label": "水池编号", "type": "string", "required": True, "max_length": 40},
         {"key": "reading_date", "label": "晨检日期", "type": "date", "required": True},

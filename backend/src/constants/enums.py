@@ -15,3 +15,10 @@ class Review(StrEnum):
     PENDING = 'pending'
     ACCEPTED = 'accepted'
     RETURNED = 'returned'
+
+class Task(StrEnum):
+    QUEUED = 'queued'
+    RUNNING = 'running'
+    DONE = 'done'
+    STALE = 'stale'
+    FAILED = 'failed'

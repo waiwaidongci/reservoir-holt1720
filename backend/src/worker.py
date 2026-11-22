@@ -2,6 +2,7 @@ import logging
 import time
 from pathlib import Path
 from src.services.execution import claim, execute, materialize_due
+from src.services.probe import claim_recalc, execute_recalc
 from src.utils.wakeup import wait
 
 logging.basicConfig(level=logging.INFO)
@@ -17,6 +18,11 @@ def main():
             heartbeat.touch()
             if lease:
                 execute(lease)
+                heartbeat.touch()
+                continue
+            recalc = claim_recalc()
+            if recalc:
+                execute_recalc(recalc)
                 heartbeat.touch()
             else:
                 wait()

@@ -18,5 +18,11 @@ export const workspace = {
   deliveries: () => call('/deliveries'),
   schedule: data => call('/schedules', data),
   disable: id => call(`/schedules/${id}/disable`, {}),
+  pools: () => call('/pools'),
+  events: () => call('/events'),
+  eventDetail: id => call(`/events/${id}`),
+  probeBatches: () => call('/probe/batches'),
+  probeJobs: () => call('/probe/jobs'),
+  importProbe: data => call('/probe/batches', data),
   download: (path, filename) => saveFile(path, session.token, filename),
 };
